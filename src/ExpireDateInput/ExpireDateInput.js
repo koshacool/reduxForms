@@ -19,7 +19,11 @@ const ExpireDateInput = ({ onChange, value, ...restProps }) => {
   };
 
 
-  return <InputComponent onChange={onValueChange} value={value} {...restProps} />;
+  return <InputComponent
+    onChange={onValueChange}
+    value={value}
+    {...restProps}
+  />;
 };
 
 ExpireDateInput.propTypes = {
