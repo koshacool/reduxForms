@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import InputComponent from '../InputComponent/';
+import InputComponent from '../InputComponent/index';
 import './styles.scss';
 
 

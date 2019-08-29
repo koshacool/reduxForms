@@ -13,6 +13,7 @@ const InputComponent = ({
   onChange,
   required,
   error = '',
+  isFormSubmited,
 }) => (
   <fieldset>
     <div className="form-group">
@@ -26,6 +27,7 @@ const InputComponent = ({
           onChange={onChange(name)}
           placeholder={placeholder}
           required={required}
+          className={`${error ? 'error' : ''}`}
         />
         <span className={`error ${error ? 'show' : ''}`}>
           {error}
@@ -48,6 +50,7 @@ InputComponent.propTypes = {
   placeholder: PropTypes.string,
   error: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  isFormSubmited: PropTypes.bool.isRequired,
 };
 
 export default InputComponent;

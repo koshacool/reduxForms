@@ -1,12 +1,12 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import PaymentForm from "./PaymentForm/";
+import { PaymentPage } from './pages/';
 
 function App() {
   return (
     <div className="App">
-      <PaymentForm />
+      <PaymentPage />
     </div>
   );
 }
