@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import InputComponent from '../formComponents/InputComponent/';
 import SubmitButton from '../formComponents/SubmitButton/';
 import ExpireDateInput from '../formComponents/ExpireDateInput/';
-
-import { validator, isFieldsValid, fieldTypes } from '../utils/validation/';
 import SelectInput from '../formComponents/SelectInput/';
+import { validator, isFieldsValid, fieldTypes } from '../utils/validation/';
 import './styles.scss';
 
 class PaymentForm extends Component {
