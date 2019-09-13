@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
+import _ from 'lodash';
 import classNames from 'classnames';
 
 import {
@@ -15,21 +15,26 @@ import { toastr } from 'react-redux-toastr';
 
 import './styles.scss';
 
+
+import ReduxFormSelect from './ReduxFormSelect';
+
 class CustomInput extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value: this.props.input.value,
     };
   }
 
 
-  onChangeDebounced = _.debounce(this.props.input.onChange, 400);
+  onChangeDebounced = _.debounce(this.props.input.onChange, 200);f
 
   onChange = event => {
-    event.persist()
-    this.setState({ value: event.target.value })
-    this.onChangeDebounced(event)
+    event.persist();
+
+    console.warn('CHANGE TEST: ', event, event.target.checked, this.props)
+    this.setState({ value: event.target.value });
+    this.onChangeDebounced(event);
   };
 
   render() {
@@ -63,13 +68,13 @@ class CustomInput extends React.Component {
       </div>
     );
   }
-};
+}
 
 const validate = values => {
   const fields = [
     'firstName',
   ];
-  console.error('VALIDATION:', values)
+  console.error('VALIDATION:', values);
   const errors = fields
     .reduce((errors, fieldName) => {
       if (!values[fieldName]) {
@@ -85,21 +90,24 @@ const validate = values => {
   return errors;
 };
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const asyncValidate = (values /*, dispatch */) => {
-  return sleep(1000).then(() => {
-    // simulate server latency
-    if (['john', 'paul', 'george', 'ringo'].includes(values.firstName)) {
-      throw { firstName: 'That username is taken' }
-    }
-  })
-};
+const asyncValidate = values => sleep(1000).then(() => {
+  // simulate server latency
+  if (['john', 'paul', 'george', 'ringo'].includes(values.firstName)) {
+    throw { firstName: 'That username is taken' };
+  }
+});
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
 
 const SimpleForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
-  console.log('PROPS: ', props);
-  console.log('is any touched: ', props.anyTouched);
+
   const onSubmit = event => {
     // event.preventDefault();
     console.log(event);
@@ -162,25 +170,17 @@ const SimpleForm = props => {
       <div>
         <label>Favorite Color</label>
         <div>
-          <Field name="favoriteColor" component="select">
-            <option />
-            <option value="ff0000">Red</option>
-            <option value="00ff00">Green</option>
-            <option value="0000ff">Blue</option>
-          </Field>
+          <Field name="favoriteColor" component={ReduxFormSelect}  options={options} />
         </div>
       </div>
-      <div>
-        <label htmlFor="employed">Employed</label>
-        <div>
-          <Field
-            name="employed"
-            id="employed"
-            component="input"
-            type="checkbox"
-          />
-        </div>
-      </div>
+
+      <Field
+        name="employed"
+        id="employed"
+        label="employed"
+        component="input"
+        type="checkbox"
+      />
       <div>
         <label>Notes</label>
         <div>
@@ -207,7 +207,7 @@ export default compose(
   connect(
     () => ({
       initialValues: {
-        // firstName: 'testing1',
+        favoriteColor: options[1],
       },
     })
   ),
